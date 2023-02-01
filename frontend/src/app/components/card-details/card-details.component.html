@@ -1,0 +1,100 @@
+<!-- <p>card-details works!</p> -->
+<div *ngIf="viewMode; else editable" class="detail bg-info ">
+  <div *ngIf="currentCard.id">
+    <h4>Card</h4>
+    <div>
+      <label><strong>Title:</strong></label> {{ currentCard.title }}
+    </div>
+    <div>
+      <label><strong>Description:</strong></label>
+      {{ currentCard.description }}
+    </div>
+    <div>
+      <label><strong>Status:</strong></label>
+      {{ currentCard.published ? "Published" : "Pending" }}
+    </div>
+    <div>
+      <label><strong>Publisher:</strong></label>
+      {{ currentCard.username}}
+    </div>
+
+    <a
+      class="badge badge-warning" *ngIf="IscurrentCardEdit"
+      routerLink="/cards/{{ currentCard.id }}"
+    >
+      <!-- {{this.isAllow}} -->
+      Edit
+    </a>
+  </div>
+
+  <div *ngIf="!currentCard">
+    <br />
+    <p>Please click on a Card...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentCard.id" class="edit-form">
+    <h4>Card</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="currentCard.title"
+          name="title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="currentCard.description"
+          name="description"
+        />
+      </div>
+
+      <div class="form-group">
+        <label><strong>Status:</strong></label>
+        {{ currentCard.published ? "Published" : "Pending" }}
+      </div>
+    </form>
+
+    <button
+      class="badge badge-primary mr-2"
+      *ngIf="currentCard.published"
+      (click)="updatePublished(false)"
+    >
+      UnPublish
+    </button>
+    <button
+      *ngIf="!currentCard.published"
+      class="badge badge-primary mr-2"
+      (click)="updatePublished(true)"
+    >
+      Publish
+    </button>
+
+    <button class="badge badge-danger mr-2" (click)="deleteCard()">
+      Delete
+    </button>
+
+    <button
+      type="submit"
+      class="badge badge-success mb-2"
+      (click)="updateCard()"
+    >
+      Update
+    </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentCard.id">
+    <br />
+    <p>Cannot access this Card...</p>
+  </div>
+</ng-template>

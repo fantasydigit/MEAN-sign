@@ -1,0 +1,46 @@
+<!-- <p>card-list works!</p> -->
+<div class="list row bg-info mt-5 ">
+  <div class="col-md-8">
+    <div class="input-group my-3" >
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by title"
+        [(ngModel)]="title"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="searchTitle()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4>Posts List</h4>
+    <ul class="list-group" >
+      <li
+        class="list-group-item mb-3"
+        *ngFor="let card of cards let i = index"        
+        [class.active]="i == currentIndex"        
+        (click)="setActiveCard(card, i)"
+      >
+        {{ card.title }}
+      </li>
+    </ul>
+
+    <button class="m-3 btn btn-sm btn-danger" *ngIf="isAllow" (click)="removeAllCards()">
+      Remove All
+    </button>
+  </div>
+  <div class="col-md-6">
+    <app-card-details
+      [viewMode]="true"
+      [currentCard]="currentCard"
+      [IscurrentCardEdit]="IscurrentCardEdit"
+    ></app-card-details>   
+  </div>
+</div>
